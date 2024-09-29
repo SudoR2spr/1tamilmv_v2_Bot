@@ -1,0 +1,11 @@
+requests
+regex
+bs4
+pyTelegramBotAPI==4.15.4
+lxml
+gunicorn==20.1.0
+Flask==2.2.2 
+Werkzeug==2.2.2
+aiogram # ==3.3.0
+python-telegram-bot==20.8
+pybase64
