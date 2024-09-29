@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, request
 
-TOKEN = '6700432608:AAGLewsKHozPU8WoAIzvdq6EYLGUhqZAZw'  # replace your bot token
+TOKEN = '6700432608:AAGLewsKHozPU8WoAIdq6EtYLGUhqZAZw'  # replace your bot token
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -20,7 +20,6 @@ real_dict = {}
 # Commands and Handlers
 @bot.message_handler(commands=['start'])
 def random_answer(message):
-    # Combine the message and photo
     text_message = (
         "Hello👋 \n\n"
         "🗳 Get latest Movies from 1Tamilmv\n\n"
@@ -34,7 +33,6 @@ def random_answer(message):
         types.InlineKeyboardButton(text="⚡ Powered By", url='https://t.me/Opleech_WD')
     )
     
-    # Send photo with caption
     bot.send_photo(
         chat_id=message.chat.id,
         photo='https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg',
@@ -50,13 +48,9 @@ def start(message):
     global movie_list, real_dict
     movie_list, real_dict = tamilmv()  # Collect both movie_list and real_dict
 
-    # Prepare the combined caption
     combined_caption = "🔗 Select a Movie from the list 🎬 :\n\nPlease select a movie:"
-
-    # Create the inline keyboard for movies
     keyboard = makeKeyboard(movie_list)
 
-    # Send photo with combined caption
     bot.send_photo(
         chat_id=message.chat.id,
         photo='https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg',
@@ -73,7 +67,7 @@ def callback_query(call):
         if call.data == f"{key}":
             if value in real_dict.keys():
                 for i in real_dict[value]:
-                    bot.send_message(call.message.chat.id, text=f"{i}\n\n🦋 𝐌𝐚𝐝𝐞 𝐁𝐲 ❤️ @Opleech_WD", parse_mode='MarkdownV2')
+                    bot.send_message(call.message.chat.id, text=i, parse_mode='HTML')  # Changed to HTML
 
 
 def makeKeyboard(movie_list):
@@ -96,41 +90,33 @@ def tamilmv():
 
     temps = soup.find_all('div', {'class': 'ipsType_break ipsContained'})
     
-    # Check if there are enough movies
     if len(temps) < 21:
-        return [], {}  # Return empty lists if there aren't enough movies
+        return [], {}
     
     for i in range(21):
         title = temps[i].findAll('a')[0].text.strip()
         link = temps[i].find('a')['href']
         movie_list.append(title)
         
-        # Get details from the movie link
         movie_details = get_movie_details(link)
         real_dict[title] = movie_details
 
-    return movie_list, real_dict  # Return both lists
+    return movie_list, real_dict
 
 def get_movie_details(url):
     try:
         html = requests.get(url)
         soup = BeautifulSoup(html.text, 'lxml')
         
-        # Retrieve magnet links
         mag = [a['href'] for a in soup.find_all('a', href=True) if 'magnet:' in a['href']]
-        
-        # Retrieve torrent file links
         filelink = [a['href'] for a in soup.find_all('a', {"data-fileext": "torrent", 'href': True})]
 
         movie_details = []
         for p in range(len(mag)):
-            # Ensure filelink exists
             if p < len(filelink):
-                # Escape the '-' character for Telegram
-                movie_details.append(f"*Movie Title* \\-->\n🧲 `{mag[p]}`\n\n🗒️-> [Torrent File Download 🖇]({filelink[p]})")
+                movie_details.append(f"<b>Movie Title:</b> \n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='{filelink[p]}'>Torrent File Download 🖇</a>")
             else:
-                # Escape the '-' character for Telegram
-                movie_details.append(f"*Movie Title* \\-->\n🧲 `{mag[p]}`\n\n🗒️-> [Torrent File Download 🖇](#)")  # Placeholder if filelink not available
+                movie_details.append(f"<b>Movie Title:</b> \n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='#'>Torrent File Download 🖇</a>")  # Placeholder if filelink not available
 
         return movie_details
     except Exception as e:
@@ -139,11 +125,9 @@ def get_movie_details(url):
 
 @app.route('/')
 def health_check():
-    return "Angel LoL Healthy", 200
+    return "Angep LOL Healthy", 200
 
 if __name__ == "__main__":
-    # Run the bot in a thread
     import threading
     threading.Thread(target=bot.polling, kwargs={'none_stop': True}).start()
-    # Run the Flask app
     app.run(host='0.0.0.0', port=3000)
