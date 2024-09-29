@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, request
 
-TOKEN = '6700432608:AAGLewsKHozPU8WoAIdq6EtYLGUhqZAZw'  # replace your bot token
+TOKEN = '6700432608:AAGLewsKHozPU8WoAIzvdEtYLGUhqZAZw'  # replace your bot token
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -48,7 +48,7 @@ def start(message):
     global movie_list, real_dict
     movie_list, real_dict = tamilmv()  # Collect both movie_list and real_dict
 
-    combined_caption = "🔗 Select a Movie from the list 🎬 :\n\nPlease select a movie:"
+    combined_caption = "🔗 Select a Movie from the list 🎬 :\n\n🔘 Please select a movie:"
     keyboard = makeKeyboard(movie_list)
 
     bot.send_photo(
@@ -112,11 +112,13 @@ def get_movie_details(url):
         filelink = [a['href'] for a in soup.find_all('a', {"data-fileext": "torrent", 'href': True})]
 
         movie_details = []
+        movie_title = soup.find('h1').text.strip()  # Assuming the title is in <h1> tag
+
         for p in range(len(mag)):
             if p < len(filelink):
-                movie_details.append(f"<b>Movie Title:</b> \n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='{filelink[p]}'>Torrent File Download 🖇</a>")
+                movie_details.append(f"<b>📂 Movie Title:</b> {movie_title}\n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='{filelink[p]}'>Torrent File Download 🖇</a>")
             else:
-                movie_details.append(f"<b>Movie Title:</b> \n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='#'>Torrent File Download 🖇</a>")  # Placeholder if filelink not available
+                movie_details.append(f"<b>📂 Movie Title:</b> {movie_title}\n🧲 <code>{mag[p]}</code>\n\n🗒️-> <a href='#'>Torrent File Download 🖇</a>")  # Placeholder if filelink not available
 
         return movie_details
     except Exception as e:
