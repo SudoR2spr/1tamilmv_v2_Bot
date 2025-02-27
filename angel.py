@@ -67,7 +67,14 @@ def callback_query(call):
         if call.data == f"{key}":
             if value in real_dict.keys():
                 for i in real_dict[value]:
-                    bot.send_message(call.message.chat.id, text=i, parse_mode='HTML')  # Changed to HTML
+                    send_long_message(call.message.chat.id, i)
+
+
+def send_long_message(chat_id, text):
+    """এই ফাংশনটি লম্বা মেসেজগুলো 4096 ক্যারেক্টারের মধ্যে ভাগ করে পাঠাবে"""
+    max_length = 4096
+    for i in range(0, len(text), max_length):
+        bot.send_message(chat_id, text[i:i+max_length], parse_mode='HTML')
 
 
 def makeKeyboard(movie_list):
@@ -112,7 +119,7 @@ def get_movie_details(url):
         filelink = [a['href'] for a in soup.find_all('a', {"data-fileext": "torrent", 'href': True})]
 
         movie_details = []
-        movie_title = soup.find('h1').text.strip()  # Assuming the title is in <h1> tag
+        movie_title = soup.find('h1').text.strip() if soup.find('h1') else "Unknown Title"
 
         for p in range(len(mag)):
             if p < len(filelink):
@@ -127,7 +134,7 @@ def get_movie_details(url):
 
 @app.route('/')
 def health_check():
-    return "Angep LOL Healthy", 200
+    return "Angel LOL Healthy", 200
 
 if __name__ == "__main__":
     import threading
