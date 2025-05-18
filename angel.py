@@ -77,7 +77,7 @@ def makeKeyboard(movie_list):
     return markup
 
 def tamilmv():
-    mainUrl = 'https://www.1tamilmv.moi'
+    mainUrl = 'https://www.1tamilmv.fi'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36',
     }
@@ -127,7 +127,7 @@ def get_movie_details(url):
 
 @app.route('/')
 def health_check():
-    return "Angep LOL Healthy", 200
+    return "Angel Bot Healthy", 200
 
 if __name__ == "__main__":
     import threading
