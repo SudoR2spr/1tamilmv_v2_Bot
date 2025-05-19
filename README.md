@@ -16,9 +16,32 @@
 </h1>
 <br>
 `Deploy Now Back4App render Koyeb Heroku`
-- Telegram bot torrent 🧲 
+- Telegram bot torrent magnet link 🧲 
 
-- `TOKEN`: angel.py line number 9 replace your bot token
+---
+
+Environment Variables
+
+Before running the bot, make sure to create a .env file in the project root with the following variables:
+
+```
+TOKEN=your_telegram_bot_token
+WEBHOOK_URL=https://your-domain.com
+TAMILMV_URL=https://www.1tamilmv.fi
+PORT=3000
+```
+
+TOKEN – Your Telegram bot token from BotFather
+
+WEBHOOK_URL – The public URL where your bot is hosted (used for setting the webhook)
+
+TAMILMV_URL – (Optional) Base URL to fetch movie data. Defaults to https://www.1tamilmv.fi if not set.
+
+PORT – Port on which the Flask app will run (default: 3000)
+
+
+
+---
 
 Bot command @Botather
 ```
