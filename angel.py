@@ -33,6 +33,7 @@ real_dict = {}
 
 # /start command
 
+
 @bot.message_handler(commands=['start'])
 def random_answer(message):
     text_message = """<b>Hello 👋</b>
