@@ -20,7 +20,7 @@
 
 ---
 
-Environment Variables
+# Environment Variables
 
 Before running the bot, make sure to create a .env file in the project root with the following variables:
 
@@ -31,13 +31,13 @@ TAMILMV_URL=https://www.1tamilmv.fi
 PORT=3000
 ```
 
-TOKEN – Your Telegram bot token from BotFather
+- `TOKEN` – Your Telegram bot token from BotFather
 
-WEBHOOK_URL – The public URL where your bot is hosted (used for setting the webhook)
+- `WEBHOOK_URL` – The public URL where your bot is hosted (used for setting the webhook)
 
-TAMILMV_URL – (Optional) Base URL to fetch movie data. Defaults to https://www.1tamilmv.fi if not set.
+- `TAMILMV_URL` – (Optional) Base URL to fetch movie data. Defaults to https://www.1tamilmv.fi if not set.
 
-PORT – Port on which the Flask app will run (default: 3000)
+- `PORT` – Port on which the Flask app will run (default: `3000`)
 
 
 
@@ -63,8 +63,8 @@ view - 🏞 View Update Movies list
 </p>
  
 -----
-Credits: [𝐖𝐎𝐎𝐃𝐜𝐫𝐚𝐟𝐭](https://t.me/Farooq_is_KING)
+# ♥️ Credits: [𝐖𝐎𝐎𝐃𝐜𝐫𝐚𝐟𝐭](https://t.me/Farooq_is_KING)
 
 - [![Contact Me On Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Farooq_is_king)
 
-Last Edited on: 29/09/2024
+# Last Updated: mon/may/2025
