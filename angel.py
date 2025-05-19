@@ -32,6 +32,8 @@ movie_list = []
 real_dict = {}
 
 # /start command
+
+
 @bot.message_handler(commands=['start'])
 def random_answer(message):
     text_message = """<b>Hello 👋</b>
@@ -46,9 +48,12 @@ def random_answer(message):
 
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(
-        types.InlineKeyboardButton('🔗 GitHub 🔗', url='https://github.com/SudoR2spr'),
-        types.InlineKeyboardButton(text="⚡ Powered By", url='https://t.me/Opleech_WD')
-    )
+        types.InlineKeyboardButton(
+            '🔗 GitHub 🔗',
+            url='https://github.com/SudoR2spr'),
+        types.InlineKeyboardButton(
+            text="⚡ Powered By",
+            url='https://t.me/Opleech_WD'))
 
     bot.send_photo(
         chat_id=message.chat.id,
@@ -58,6 +63,8 @@ def random_answer(message):
     )
 
 # /view command
+
+
 @bot.message_handler(commands=['view'])
 def start(message):
     bot.send_message(message.chat.id, "<b>🧲 Please wait for 10 ⏰ seconds</b>")
@@ -74,6 +81,7 @@ def start(message):
         reply_markup=keyboard
     )
 
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     global real_dict
@@ -83,16 +91,21 @@ def callback_query(call):
                 for i in real_dict[value]:
                     bot.send_message(call.message.chat.id, text=i)
 
+
 def makeKeyboard(movie_list):
     markup = types.InlineKeyboardMarkup()
     for key, value in enumerate(movie_list):
-        markup.add(types.InlineKeyboardButton(text=value, callback_data=f"{key}"))
+        markup.add(
+            types.InlineKeyboardButton(
+                text=value,
+                callback_data=f"{key}"))
     return markup
+
 
 def tamilmv():
     mainUrl = TAMILMV_URL
     headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
 
     movie_list = []
@@ -122,17 +135,21 @@ def tamilmv():
         logger.error(f"Error in tamilmv function: {e}")
         return [], {}
 
+
 def get_movie_details(url):
     try:
         html = requests.get(url, timeout=15)
         html.raise_for_status()
         soup = BeautifulSoup(html.text, 'lxml')
 
-        mag = [a['href'] for a in soup.find_all('a', href=True) if 'magnet:' in a['href']]
-        filelink = [a['href'] for a in soup.find_all('a', {"data-fileext": "torrent", 'href': True})]
+        mag = [a['href'] for a in soup.find_all(
+            'a', href=True) if 'magnet:' in a['href']]
+        filelink = [a['href'] for a in soup.find_all(
+            'a', {"data-fileext": "torrent", 'href': True})]
 
         movie_details = []
-        movie_title = soup.find('h1').text.strip() if soup.find('h1') else "Unknown Title"
+        movie_title = soup.find('h1').text.strip(
+        ) if soup.find('h1') else "Unknown Title"
 
         for p in range(len(mag)):
             torrent_link = filelink[p] if p < len(filelink) else None
@@ -163,9 +180,11 @@ def get_movie_details(url):
         logger.error(f"Error retrieving movie details: {e}")
         return []
 
+
 @app.route('/')
 def health_check():
     return "Angel Bot Healthy", 200
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -176,6 +195,7 @@ def webhook():
         return ''
     else:
         return 'Invalid content type', 403
+
 
 if __name__ == "__main__":
     # Remove any previous webhook
