@@ -1,0 +1,55 @@
+name: Code Quality & Auto PR
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 3 AM UTC
+
+jobs:
+  scan-and-pr:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 autopep8 safety
+
+      - name: Lint Check (flake8)
+        run: |
+          flake8 . || true
+
+      - name: Auto Fix with autopep8
+        run: |
+          autopep8 --in-place --aggressive --aggressive -r .
+
+      - name: Security Check (safety)
+        run: |
+          safety check || true
+
+      - name: Commit & Create PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore: auto lint & security fix"
+          title: "Automated Code Fixes (Lint & Security)"
+          body: |
+            This PR includes:
+            - Auto code formatting using `autopep8`
+            - Security audit using `safety`
+          branch: auto/code-fix
