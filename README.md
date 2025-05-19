@@ -67,4 +67,4 @@ view - 🏞 View Update Movies list
 
 - [![Contact Me On Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Farooq_is_king)
 
-# Last Updated: mon/may/2025
+# Last Commits on May 19, 2025
