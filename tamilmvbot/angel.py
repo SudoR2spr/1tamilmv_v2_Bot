@@ -19,7 +19,7 @@ load_dotenv()
 # ============ WOODctaft =================
 TOKEN = os.getenv('TOKEN')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
-TAMILMV_URL = os.getenv('TAMILMV_URL', 'https://www.1tamilmv.fi')
+TAMILMV_URL = os.getenv('TAMILMV_URL', 'https://www.1tamilmv.boo')
 PORT = int(os.getenv('PORT', 3000))
 # ========================================
 bot = telebot.TeleBot(TOKEN, parse_mode='HTML')
