@@ -30,7 +30,7 @@ except FileNotFoundError:
 # মূল setup
 setup(
     name="tamilmv-bot",
-    version="0.2.1",  
+    version="0.2.1",
     description="Telegram bot for downloading from 1Tamilmv Torrent magnet link",
     long_description=long_description,
     long_description_content_type="text/markdown",
